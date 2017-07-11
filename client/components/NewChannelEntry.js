@@ -24,20 +24,22 @@ function NewChannelEntry (props) {
 
 /** Write your `connect` component below! **/
 
-const mapStateToProps = function (state) {
+const mapStateToProps = function (state, ownProps) {
   return {
-    newChannelEntry: state.newChannelEntry
+    newChannelEntry: state.newChannelEntry,
+    history: ownProps.history
   };
 }
 
-const mapDispatchToProps = function (dispatch/*, ownProps*/) {
+const mapDispatchToProps = function (dispatch, ownProps) {
   return {
     handleChange (event) {
       dispatch(writeChannel(event.target.value));
     },
     handleSubmit (event) {
       event.preventDefault();
-      dispatch(postNewChannel({name: event.target.channelName.value}));
+      dispatch(postNewChannel({name: event.target.channelName.value}, ownProps.history));
+      dispatch(writeChannel(''));
     }
   };
 }
